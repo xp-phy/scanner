@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Scanner - Professional PDF Tool for iOS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #2c6fbb;
+            --primary-dark: #1e5ca3;
+            --secondary: #4a90e2;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+            --success: #28a745;
+        }
+
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .logo img {
+            margin-right: 10px;
+            height: 32px;
+            width: 32px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--gray);
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 22px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+            box-shadow: 0 10px 20px rgba(44, 111, 187, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-download {
+            background-color: var(--primary);
+            margin-right: 15px;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Features Section */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(44, 111, 187, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* Download Section */
+        .download {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .download h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .download p {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: white;
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .app-store-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-store-btn i {
+            font-size: 30px;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-info {
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .contact-info p {
+            margin-bottom: 30px;
+            color: var(--gray);
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            background-color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .contact-email:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-email i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .btn-download {
+                margin-right: 0;
+                margin-bottom: 15px;
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .btn-outline {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="logo.jpg" alt="IA Scanner Logo">
+                    <span>IA Scanner</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="app-icon">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+            <h1>IA Scanner - Professional PDF Tool</h1>
+            <p>Scan, merge, split, watermark, lock, and unlock PDFs - All-in-one PDF solution that makes document processing simple and efficient</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-download">Download Now</a>
+                <a href="#features" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>IA Scanner provides comprehensive PDF processing tools to meet all your document needs</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Scan to PDF</h3>
+                    <p>Quickly scan documents using your phone camera, automatically detect edges, and generate high-quality PDF files.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3>PDF Merge</h3>
+                    <p>Combine multiple PDF files into one, easily organize your documents while preserving original formatting.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h3>PDF Split</h3>
+                    <p>Split large PDF files by pages, extract the parts you need for easy sharing and management.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Add Watermark</h3>
+                    <p>Add text or image watermarks to your PDFs to protect your document copyright and prevent unauthorized use.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>PDF Lock</h3>
+                    <p>Password-protect your PDF files to prevent unauthorized access and ensure document security.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-unlock"></i>
+                    </div>
+                    <h3>PDF Unlock</h3>
+                    <p>Unlock password-protected PDF files for editing, printing, and other operations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="container">
+            <h2>Download IA Scanner Now</h2>
+            <p>Experience professional PDF processing tools on your iPhone and iPad. Completely free to download and use.</p>
+            <a href="https://apps.apple.com/us/app/ia-cleaner/id6753741094" class="app-store-btn">
+                <i class="fab fa-apple"></i>
+                <div>
+                    <div style="font-size: 12px;">Download on the</div>
+                    <div>App Store</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Us</h3>
+                    <p>If you have any questions, suggestions, or need technical support, please feel free to contact us</p>
+                    <a href="mailto:ia.help@outlook.com" class="contact-email">
+                        <i class="fas fa-envelope"></i>
+                        ia.help@outlook.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>IA Scanner</h4>
+                    <p>Professional PDF tool app that makes document processing simple and efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Features</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Scan to PDF</a></li>
+                        <li><a href="#features">PDF Merge</a></li>
+                        <li><a href="#features">PDF Split</a></li>
+                        <li><a href="#features">Add Watermark</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#contact">Help Center</a></li>
+                        <li><a href="#contact">Privacy Policy</a></li>
+                        <li><a href="#contact">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 IA Scanner. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu after clicking
+                    if(window.innerWidth <= 768) {
+                        document.querySelector('.nav-links').style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if(window.innerWidth <= 768 && 
+               !navLinks.contains(event.target) && 
+               !mobileMenu.contains(event.target)) {
+                navLinks.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
